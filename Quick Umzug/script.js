@@ -1,206 +1,570 @@
-// ------------------ MAIN APP SCRIPT ------------------
-const $ = (sel, ctx=document) => ctx.querySelector(sel);
-const $$ = (sel, ctx=document) => Array.from(ctx.querySelectorAll(sel));
+/* ===== YOUR CONTACT CONFIG ===== */
+const PHONE_DISPLAY = "+49 30 123 456 789"; // shown on the site
+const PHONE_INTL = "+4930123456789"; // for tel: links
+const PHONE_WHATSAPP = "4930123456789"; // no + for wa.me
+const EMAIL_TO = "majdalanini5@gmail.com";
 
-// i18n dictionary
-const dict = {
-  en:{
-    'nav.home':'Home','nav.services':'Services','nav.gallery':'Gallery','nav.reviews':'Reviews','nav.contact':'Contact',
-    'hero.badge':'Trusted by 1,000+ Berliners',
-    'hero.title':'Stress-free moving & transport — fast, careful, insured.',
-    'hero.sub':'From studio flats to full houses, we pack, protect, and deliver on time. Get a free quote today.',
-    'cta.quote':'Get a quote','cta.call':'Call now',
-    'home.cards.0.t':'Professional Crew','home.cards.0.d':'Friendly workers trained to protect your furniture and floors.',
-    'home.cards.1.t':'Flat, Fair Pricing','home.cards.1.d':'No surprises. Clear prices with everything included.',
-    'home.cards.2.t':'Fully Insured','home.cards.2.d':'Your belongings are covered from A to B.',
-    'services.title':'Our Services','services.sub':'Tailored to your move — choose what you need.',
-    'services.items.0.t':'Apartment & House Moves','services.items.0.d':'Packing, loading, transport, unloading — end-to-end.',
-    'services.items.1.t':'Furniture Assembly','services.items.1.d':' We bring tools and protect floors.',
-    'services.items.2.t':'Office Relocation','services.items.2.d':'Minimal downtime, careful handling of electronics.',
-    'services.items.3.t':'Disposal & Recycling','services.items.3.d':'Old furniture removal with proper recycling.',
-    'gallery.title':'Gallery','gallery.sub':'Recent jobs and our protective packing.',
-    'reviews.title':'Customer Reviews','reviews.sub':'Leave your review — it helps others choose with confidence.','reviews.avg':'Average rating',
-    'form.name':'Your name','form.rating':'Your rating','form.comment':'Comment','form.submit':'Submit review',
-    'contact.title':'Contact','contact.sub':'Quick quote? Send us photos on WhatsApp or call us now.',
-    'contact.whatsapp.t':'WhatsApp','contact.whatsapp.d':'Message us with your moving list and photos.','contact.whatsapp.btn':'Chat on WhatsApp',
-    'contact.phone.t':'Phone','contact.phone.d':'We speak English & German.','contact.phone.btn':'Call +49 176 5799 0309',
-    'footer.rights':'All rights reserved.'
-  },
-  de:{
-    'nav.home':'Start','nav.services':'Leistungen','nav.gallery':'Galerie','nav.reviews':'Bewertungen','nav.contact':'Kontakt',
-    'hero.badge':'Vertraut von über 1.000 Berliner:innen',
-    'hero.title':'Stressfreier Umzug & Transport – schnell, sorgfältig, versichert.',
-    'hero.sub':'Vom Studio bis zum Haus: Wir verpacken, schützen und liefern pünktlich. Holen Sie sich jetzt ein Angebot.',
-    'cta.quote':'Angebot anfragen','cta.call':'Jetzt anrufen',
-    'home.cards.0.t':'Professionelles Team','home.cards.0.d':'Freundliche UmzugsArbeiter, die Möbel und Böden schützen.',
-    'home.cards.1.t':'Faire Festpreise','home.cards.1.d':'Keine Überraschungen. Klare Preise mit allem inklusive.',
-    'home.cards.2.t':'Voll versichert','home.cards.2.d':'Ihre Sachen sind von A bis B abgesichert.',
-    'services.title':'Unsere Leistungen','services.sub':'Passend zu Ihrem Umzug – wählen Sie, was Sie brauchen.',
-    'services.items.0.t':'Wohnungs- & Hausumzüge','services.items.0.d':'Packen, Laden, Transport, Entladen – alles aus einer Hand.',
-    'services.items.1.t':'Möbelmontage','services.items.1.d':'Wir bringen Werkzeug mit und schützen die Böden.',
-    'services.items.2.t':'Büroumzug','services.items.2.d':'Minimale Ausfallzeit, sorgfältiger Umgang mit Elektronik.',
-    'services.items.3.t':'Entsorgung & Recycling','services.items.3.d':'Altmöbel fachgerecht entsorgen lassen.',
-    'gallery.title':'Galerie','gallery.sub':'Aktuelle Einsätze und unser Schutzverpacken.',
-    'reviews.title':'Kundenbewertungen','reviews.sub':'Teilen Sie Ihre Erfahrung – das hilft anderen bei der Wahl.','reviews.avg':'Durchschnittsbewertung',
-    'form.name':'Ihr Name','form.rating':'Ihre Bewertung','form.comment':'Kommentar','form.submit':'Bewertung senden',
-    'contact.title':'Kontakt','contact.sub':'Schnelles Angebot? Senden Sie uns Fotos per WhatsApp oder rufen Sie an.',
-    'contact.whatsapp.t':'WhatsApp','contact.whatsapp.d':'Schicken Sie uns Ihre Umzugsliste und Fotos.','contact.whatsapp.btn':'Auf WhatsApp chatten',
-    'contact.phone.t':'Telefon','contact.phone.d':'Wir sprechen Deutsch & Englisch.','contact.phone.btn':'Anrufen: +49 176 5799 0309',
-    'footer.rights':'Alle Rechte vorbehalten.'
-  }
-};
+/* Header shadow */
+const header = document.querySelector("header");
+const onScroll = () => header.classList.toggle("scrolled", window.scrollY > 8);
+document.addEventListener("scroll", onScroll);
+onScroll();
 
-const state = { lang: localStorage.getItem('lang') || 'en', theme: localStorage.getItem('theme') || 'dark' };
-
-function applyLang(lang){
-  state.lang = lang;
-  localStorage.setItem('lang',lang);
-  document.documentElement.lang = (lang==='de'?'de':'en');
-  $$('[data-i18n]').forEach(el=>{
-    const k = el.getAttribute('data-i18n');
-    const t = (dict[lang]||{})[k];
-    if(typeof t!=='undefined') el.textContent=t;
-  });
-}
-
-function applyTheme(theme){
-  state.theme = theme;
-  localStorage.setItem('theme',theme);
-  document.documentElement.classList.toggle('light', theme==='light');
-}
-
-// Ensure all sections visible
-$$('[data-page]').forEach(s=>{ s.hidden=false; s.removeAttribute('hidden'); });
-
-// Smooth scroll with offset
-function scrollToId(id){
-  const el=$(id); if(!el) return;
-  const h=$('header')?.offsetHeight||0;
-  const y=el.getBoundingClientRect().top + window.scrollY - h - 6;
-  window.scrollTo({top:y, behavior:'smooth'});
-}
-$$('.nav-links a[href^="#"]').forEach(a=>{
-  a.addEventListener('click', (e)=>{
-    e.preventDefault();
-    const id=a.getAttribute('href');
-    scrollToId(id);
-    history.replaceState(null,'',id);
-  }, {passive:false});
+/* Mobile menu */
+document.querySelector(".menu-toggle").addEventListener("click", () => {
+  const ul = document.querySelector("nav ul");
+  const visible = getComputedStyle(ul).display !== "none";
+  ul.style.display = visible ? "none" : "flex";
+  ul.style.flexDirection = "column";
+  ul.style.position = "absolute";
+  ul.style.right = "1rem";
+  ul.style.top = "64px";
+  ul.style.background = "var(--card)";
+  ul.style.padding = "14px";
+  ul.style.borderRadius = "12px";
+  ul.style.boxShadow = "var(--shadow)";
 });
 
-// Active link highlight
-const links=$$('.nav-links a');
-const io=new IntersectionObserver((ents)=>{
-  ents.forEach(e=>{
-    if(e.isIntersecting){
-      const id='#'+e.target.id;
-      links.forEach(a=>a.classList.toggle('active', a.getAttribute('href')===id));
-    }
-  });
-},{root:null, rootMargin:'-55% 0px -40% 0px', threshold:0});
-$$('[data-page]').forEach(sec=> io.observe(sec));
+/* Call buttons (tel:) */
+document
+  .querySelectorAll("[data-call]")
+  .forEach((el) => el.setAttribute("href", `tel:${PHONE_INTL}`));
+document.getElementById("heroNumber").textContent = PHONE_DISPLAY;
+document.getElementById("phoneLink").textContent = PHONE_DISPLAY;
 
-// Buttons
-$('#langBtn')?.addEventListener('click', ()=> applyLang(state.lang==='en'?'de':'en'));
-$('#themeBtn')?.addEventListener('click', ()=> applyTheme(state.theme==='dark'?'light':'dark'));
-
-// Init
-$('#year').textContent = new Date().getFullYear();
-applyTheme(state.theme); applyLang(state.lang);
-if(location.hash){ setTimeout(()=> scrollToId(location.hash), 80); }
-window.addEventListener('scroll', ()=> $('header').classList.toggle('scrolled', window.scrollY>4));
-
-
-// ------------------ FIREBASE REVIEWS ------------------
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
-import { getFirestore, collection, addDoc, serverTimestamp, query, orderBy, onSnapshot, limit } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyBmJNUtDlMl8LFoK5H8hIVn6QecFm6JJgo",
-  authDomain: "quick-umzug.firebaseapp.com",
-  projectId: "quick-umzug",
-  storageBucket: "quick-umzug.firebasestorage.app",
-  messagingSenderId: "335118579637",
-  appId: "1:335118579637:web:26acbbeb6539b5b1decbfc",
-  measurementId: "G-W42QQ3YHE2"
+/* WhatsApp links */
+const waTextDefault = {
+  en: "Hello, I am interested in your moving service in Berlin.",
+  de: "Hallo, ich interessiere mich für Ihren Umzugsservice in Berlin.",
 };
-
-const appFB = initializeApp(firebaseConfig);
-const db = getFirestore(appFB);
-const reviewsCol = collection(db, 'reviews');
-
-// --- Stars helper ---
-function makeStars(container, initial=0, readOnly=false){
-  if(!container) return;
-  container.innerHTML='';
-  const n=5; const stars=[];
-  for(let i=1;i<=n;i++){
-    const svg = document.createElementNS('http://www.w3.org/2000/svg','svg');
-    svg.setAttribute('viewBox','0 0 24 24');
-    svg.style.width='22px'; svg.style.height='22px';
-    svg.innerHTML = '<path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>';
-    if(initial>=i) svg.classList.add('active');
-    if(!readOnly){
-      svg.addEventListener('mouseenter',()=>{ stars.forEach((s,idx)=>s.classList.toggle('active', idx < i)); });
-      svg.addEventListener('click',()=>{ ratingState.value=i; });
-      container.addEventListener('mouseleave',()=>{ stars.forEach((s,idx)=>s.classList.toggle('active', idx < (ratingState.value||0))); });
-    }
-    container.appendChild(svg); stars.push(svg);
-  }
+function buildWA(text) {
+  return `https://wa.me/${PHONE_WHATSAPP}?text=${encodeURIComponent(text)}`;
+}
+function setWA(lang) {
+  const txt = waTextDefault[lang] || waTextDefault.en;
+  ["waHero", "waLink"].forEach((id) => {
+    const el = document.getElementById(id);
+    if (el) el.href = buildWA(txt);
+  });
 }
 
-const ratingState = { value:0 };
-makeStars(document.getElementById('ratingStars'));
+/* Contact email link */
+document.getElementById("mailLink").href = `mailto:${EMAIL_TO}`;
+document.getElementById("y").textContent = new Date().getFullYear();
 
-// Render reviews
-function renderReviews(docs){
-  const list = $('#reviewsList');
-  list.innerHTML = '';
-  let sum = 0;
-  if(docs.length===0){
-    const empty = document.createElement('div');
-    empty.className='muted';
-    empty.textContent = (document.documentElement.lang==='de') ? 'Noch keine Bewertungen.' : 'No reviews yet.';
-    list.appendChild(empty);
-  } else {
-    docs.forEach(d=>{
-      const r = d.data();
-      sum += (r.rating||0);
-      const card = document.createElement('div');
-      card.className='review';
-      const name = document.createElement('div'); name.style.fontWeight='700'; name.textContent=r.name || 'Anon';
-      const stars = document.createElement('div'); stars.className='stars'; makeStars(stars, r.rating||0, true);
-      const text = document.createElement('p'); text.className='muted'; text.textContent=r.comment || '';
-      card.append(name, stars, text);
-      list.appendChild(card);
+/* Reviews with per-review delete */
+const REV_KEY = "ut_reviews_v6",
+  CLIENT_ID_KEY = "ut_client_id";
+let CLIENT_ID = localStorage.getItem(CLIENT_ID_KEY);
+if (!CLIENT_ID) {
+  CLIENT_ID =
+    crypto && crypto.randomUUID
+      ? crypto.randomUUID()
+      : Date.now().toString(36) + Math.random().toString(36).slice(2);
+  localStorage.setItem(CLIENT_ID_KEY, CLIENT_ID);
+}
+
+const reviewFormEl = document.getElementById("reviewForm");
+const reviewsListEl = document.getElementById("reviewsList");
+const revRatingInput = document.getElementById("revRating");
+const revText = document.getElementById("revText");
+const revName = document.getElementById("revName");
+const avgNumEl = document.getElementById("avgNum");
+const revCountEl = document.getElementById("revCount");
+const avgStarsEl = document.getElementById("avgStars");
+const clearBtn = document.getElementById("clearReviews");
+
+const loadReviews = () => {
+  try {
+    return JSON.parse(localStorage.getItem(REV_KEY)) || [];
+  } catch {
+    return [];
+  }
+};
+const saveReviews = (arr) => localStorage.setItem(REV_KEY, JSON.stringify(arr));
+
+function buildStars(container, count = 0, onSelect) {
+  container.innerHTML = "";
+  for (let i = 1; i <= 5; i++) {
+    const s = document.createElement("span");
+    s.className = "star" + (i <= count ? " active" : "");
+    s.textContent = "★";
+    s.setAttribute("role", "radio");
+    s.setAttribute("aria-checked", i === count ? "true" : "false");
+    s.setAttribute("tabindex", "0");
+    s.addEventListener("mouseenter", () => highlight(container, i));
+    s.addEventListener("mouseleave", () => highlight(container, count));
+    s.addEventListener("click", () => {
+      count = i;
+      highlight(container, count);
+      onSelect && onSelect(count);
     });
+    s.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        count = i;
+        highlight(container, count);
+        onSelect && onSelect(count);
+      }
+      if (e.key === "ArrowRight") {
+        count = Math.min(5, count + 1);
+        highlight(container, count);
+        onSelect && onSelect(count);
+      }
+      if (e.key === "ArrowLeft") {
+        count = Math.max(1, count - 1);
+        highlight(container, count);
+        onSelect && onSelect(count);
+      }
+    });
+    container.appendChild(s);
   }
-  const avg = docs.length ? (sum/docs.length) : 0;
-  makeStars(document.getElementById('avgStars'), Math.round(avg), true);
-  document.getElementById('avgText').textContent = `${avg.toFixed(1)} (${docs.length})`;
+}
+function highlight(container, n) {
+  [...container.children].forEach((el, idx) => {
+    el.classList.toggle("active", idx < n);
+    el.setAttribute("aria-checked", idx + 1 === n ? "true" : "false");
+  });
+}
+function starStrip(n) {
+  let out = "";
+  for (let i = 1; i <= 5; i++)
+    out += `<span class="star ${i <= n ? "active" : ""}">★</span>`;
+  return `<div class="stars" aria-hidden="true" style="gap:6px">${out}</div>`;
 }
 
-// Live listener
-const q = query(reviewsCol, orderBy('ts','desc'), limit(100));
-onSnapshot(q, (snap)=>{ renderReviews(snap.docs.slice().reverse()); });
-
-// Submit review
-const form = document.getElementById('reviewForm');
-form?.addEventListener('submit', async (e)=>{
-  e.preventDefault();
-  const name = document.getElementById('name').value.trim();
-  const comment = document.getElementById('comment').value.trim();
-  const rating = ratingState.value || 0;
-  if(!name || !comment || rating===0){
-    alert(document.documentElement.lang==='de' ? 'Bitte füllen Sie alle Felder aus und wählen Sie Sterne.' : 'Please fill all fields and choose a star rating.');
+function renderReviews() {
+  const lang = getLang(),
+    dict = I18N[lang],
+    data = loadReviews();
+  const avg = data.length
+    ? data.reduce((a, b) => a + b.rating, 0) / data.length
+    : 0;
+  avgNumEl.textContent = avg.toFixed(1);
+  revCountEl.textContent = data.length;
+  avgStarsEl.innerHTML = starStrip(Math.round(avg));
+  reviewsListEl.innerHTML = "";
+  if (!data.length) {
+    const empty = document.createElement("div");
+    empty.className = "card empty";
+    empty.textContent =
+      lang === "de"
+        ? "Noch keine Bewertungen — seien Sie die/der Erste!"
+        : "No reviews yet — be the first!";
+    reviewsListEl.appendChild(empty);
     return;
   }
-  try{
-    await addDoc(reviewsCol, { name, comment, rating, ts: serverTimestamp() });
-    ratingState.value = 0; form.reset();
-    makeStars(document.getElementById('ratingStars')); // reset stars
-  }catch(err){
-    console.error(err);
-    alert('Could not send review. Please try again later.');
+  data
+    .slice()
+    .reverse()
+    .forEach((r) => {
+      const isMine = r.clientId === CLIENT_ID;
+      const card = document.createElement("div");
+      card.className = "review-card card";
+      card.innerHTML = `
+        <div class="del-row">
+          ${starStrip(r.rating)}
+          ${
+            isMine
+              ? `<button class="del-btn" data-id="${r.id}" data-i18n="review_delete">${dict.review_delete}</button>`
+              : ""
+          }
+        </div>
+        <p>${escapeHtml(r.text)}</p>
+        <div class="meta">${escapeHtml(
+          r.name || (lang === "de" ? "Anonym" : "Anonymous")
+        )} · ${new Date(r.ts).toLocaleDateString()}</div>`;
+      reviewsListEl.appendChild(card);
+    });
+}
+const escapeHtml = (str) =>
+  (str || "").replace(
+    /[&<>"']/g,
+    (m) =>
+      ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" }[
+        m
+      ])
+  );
+reviewsListEl.addEventListener("click", (e) => {
+  const btn = e.target.closest(".del-btn");
+  if (!btn) return;
+  const id = btn.dataset.id;
+  const msg =
+    getLang() === "de"
+      ? "Diese Bewertung löschen? (Nur in diesem Browser)"
+      : "Delete this review? (This only removes it from this browser)";
+  if (!confirm(msg)) return;
+  const arr = loadReviews();
+  const idx = arr.findIndex((x) => x.id === id && x.clientId === CLIENT_ID);
+  if (idx > -1) {
+    arr.splice(idx, 1);
+    saveReviews(arr);
+    renderReviews();
+  }
+});
+
+const writerStars = document.getElementById("revStars");
+buildStars(writerStars, 0, (val) => {
+  revRatingInput.value = val;
+});
+reviewFormEl.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const rating = Number(revRatingInput.value || 0),
+    text = (revText.value || "").trim();
+  if (!rating) {
+    alert(
+      getLang() === "de"
+        ? "Bitte Sterne auswählen."
+        : "Please select a star rating."
+    );
+    return;
+  }
+  if (text.length < 10) {
+    alert(
+      getLang() === "de"
+        ? "Bitte mindestens 10 Zeichen schreiben."
+        : "Please write at least 10 characters."
+    );
+    return;
+  }
+  const id =
+    crypto && crypto.randomUUID
+      ? crypto.randomUUID()
+      : Date.now().toString(36) + Math.random().toString(36).slice(2);
+  const entry = {
+    id,
+    clientId: CLIENT_ID,
+    rating,
+    text,
+    name: (revName.value || "").trim(),
+    ts: Date.now(),
+  };
+  const arr = loadReviews();
+  arr.push(entry);
+  saveReviews(arr);
+  reviewFormEl.reset();
+  revRatingInput.value = "";
+  buildStars(writerStars, 0, (val) => {
+    revRatingInput.value = val;
+  });
+  renderReviews();
+  writerStars.scrollIntoView({ behavior: "smooth", block: "start" });
+});
+clearBtn.addEventListener("click", () => {
+  if (
+    confirm(
+      getLang() === "de"
+        ? "Nur lokal: Alle gespeicherten Bewertungen löschen?"
+        : "Local only: Delete all saved reviews?"
+    )
+  ) {
+    localStorage.removeItem(REV_KEY);
+    renderReviews();
+  }
+});
+
+/* i18n */
+const I18N = {
+  en: {
+    brand: "UmzugTransport",
+    nav_services: "Services",
+    nav_pricing: "Pricing",
+    nav_reviews: "Reviews",
+    nav_booking: "Booking",
+    nav_contact: "Contact",
+    cta_call: "Call",
+    hero_title: "Moving Service in Berlin – Fast, Reliable & Fair",
+    hero_subtitle:
+      "Transparent prices, insured & professional — we make your move stress-free.",
+    hero_whatsapp: "WhatsApp Chat",
+    hp_insured: "• Insured & Reliable",
+    hp_experience: "15+ Years Experience",
+    hp_fair: "Fair Pricing",
+    services_title: "Our Services",
+    services_sub: "Everything you need for a smooth move.",
+    svc_local_title: "Local Moves (Berlin)",
+    svc_local_desc: "City moves within Berlin — fast & careful.",
+    svc_furniture_title: "Furniture Assembly",
+    svc_furniture_desc: "Professional disassembly & re-assembly.",
+    svc_van_title: "Van + Driver",
+    svc_van_desc: "Small transports, helpers on request.",
+    svc_clear_title: "Clearance & Disposal",
+    svc_clear_desc: "Eco-friendly, transparent billing.",
+    svc_survey_title: "Survey & Advice",
+    svc_survey_desc: "Free estimate by phone or on-site.",
+    pricing_title: "Transparent Pricing",
+    pricing_sub: "Fair and honest — no hidden fees.",
+    price_local_title: "Local Move (Berlin)",
+    price_local_desc: "incl. 2 movers + van",
+    price_helper_title: "Extra Helper",
+    price_helper_desc: "additional helper per hour",
+    price_assembly_title: "Assembly/Disassembly",
+    price_assembly_desc: "per item (simple)",
+    price_clear_title: "Clearance/Disposal",
+    price_clear_desc: "to recycling center",
+    from: "from",
+    per_hour: "/hour",
+    flat: "flat",
+    per_m3: "per m³",
+    pricing_note:
+      "All prices include insurance & VAT. Final cost depends on distance, floors & volume.",
+    gal_team:
+      "Our experienced team<br><span class='tiny'>Professional & reliable</span>",
+    reviews_title: "Reviews",
+    reviews_sub: "Your opinion matters — rate our service.",
+    reviews_count_word: "reviews",
+    review_form_title: "Leave a review",
+    review_form_tip: "Select stars and write a short comment.",
+    review_rating_label: "Your rating",
+    review_name_label: "Your name (optional)",
+    review_comment_label: "Your comment",
+    review_submit: "Submit review",
+    review_clear: "Clear local reviews",
+    review_note: "Note: Stored locally in your browser (MVP).",
+    review_recent: "Recent reviews",
+    review_sort: "Newest first",
+    review_delete: "Delete",
+    booking_title: "Booking",
+    booking_sub: "Send the basics — we’ll reply with a quote quickly.",
+    f_name: "Name*",
+    f_phone: "Phone*",
+    f_date: "Moving date*",
+    f_size: "Home size",
+    f_from: "From (address)",
+    f_to: "To (address)",
+    f_message: "Message",
+    ph_fullname: "John Doe",
+    ph_phone: "+49 ...",
+    ph_from: "Street, ZIP City, floor",
+    ph_to: "Street, ZIP City, floor",
+    ph_message: "Special items (elevator, piano, no-parking zone, boxes)…",
+    ph_name: "John D.",
+    ph_comment: "How was your experience? (min 10 characters)",
+    opt_choose: "Please choose",
+    opt_1: "1 room",
+    opt_2: "2 rooms",
+    opt_3: "3 rooms",
+    opt_4: "4 rooms",
+    opt_5: "5+ rooms",
+    cta_email: "Send by Email",
+    contact_title: "Contact",
+    contact_sub: "Questions? Call or message us on WhatsApp.",
+    contact_direct: "Direct contact",
+    contact_phone: "Phone:",
+    contact_email: "Email:",
+    contact_email_send: "Send email",
+    contact_whatsapp: "Start chat",
+    hours: "Office hours: Mon–Sat 08:00–20:00",
+    rights: "All rights reserved.",
+    legal: "Imprint · Privacy · Terms",
+    mail_subject: "Moving Request via Website",
+    mail_subject_prefix: "New Moving Request",
+    mail_prices_note:
+      "Pricing info: Local from €80/h (2 movers + van), Extra helper +€25/h, Assembly from €30, Clearance from €50/m³",
+  },
+  de: {
+    brand: "UmzugTransport",
+    nav_services: "Services",
+    nav_pricing: "Preise",
+    nav_reviews: "Bewertungen",
+    nav_booking: "Terminbuchung",
+    nav_contact: "Kontakt",
+    cta_call: "Anrufen",
+    hero_title: "Umzugsservice in Berlin – Schnell, Zuverlässig & Fair",
+    hero_subtitle:
+      "Transparente Preise, versichert & professionell – wir machen Ihren Umzug stressfrei.",
+    hero_whatsapp: "WhatsApp Chat",
+    hp_insured: "• Versichert & Zuverlässig",
+    hp_experience: "15+ Jahre Erfahrung",
+    hp_fair: "Faire Preise",
+    services_title: "Unsere Services",
+    services_sub: "Alles für einen reibungslosen Umzug.",
+    svc_local_title: "Lokale Umzüge (Berlin)",
+    svc_local_desc: "Stadtumzüge innerhalb Berlins – schnell & sorgfältig.",
+    svc_furniture_title: "Möbelmontage",
+    svc_furniture_desc: "Fachgerechter Ab- & Aufbau.",
+    svc_van_title: "Transporter + Fahrer",
+    svc_van_desc: "Kleintransporte, Helfer auf Wunsch.",
+    svc_clear_title: "Entrümpelung & Entsorgung",
+    svc_clear_desc: "Umweltgerecht & transparent.",
+    svc_survey_title: "Besichtigung & Beratung",
+    svc_survey_desc: "Kostenlose Einschätzung per Telefon oder vor Ort.",
+    pricing_title: "Transparente Preise",
+    pricing_sub: "Fair und ehrlich – ohne versteckte Kosten.",
+    price_local_title: "Lokaler Umzug (Berlin)",
+    price_local_desc: "inkl. 2 Umzugshelfer + Transporter",
+    price_helper_title: "Extra Umzugshelfer",
+    price_helper_desc: "zusätzlicher Helfer pro Stunde",
+    price_assembly_title: "Montage/Demontage",
+    price_assembly_desc: "pro Teil (einfach)",
+    price_clear_title: "Entrümpelung/Entsorgung",
+    price_clear_desc: "zum Recyclinghof",
+    from: "ab",
+    per_hour: "/Stunde",
+    flat: "pauschal",
+    per_m3: "pro m³",
+    pricing_note:
+      "Alle Preise inkl. Versicherung & MwSt. Endpreis abhängig von Entfernung, Stockwerk & Volumen.",
+    gal_team:
+      "Unser erfahrenes Team<br><span class='tiny'>Professionell & zuverlässig</span>",
+    reviews_title: "Bewertungen",
+    reviews_sub: "Ihre Meinung zählt – bewerten Sie unseren Service.",
+    reviews_count_word: "Bewertungen",
+    review_form_title: "Bewertung abgeben",
+    review_form_tip: "Sterne wählen und kurz kommentieren.",
+    review_rating_label: "Ihre Bewertung",
+    review_name_label: "Ihr Name (optional)",
+    review_comment_label: "Ihr Kommentar",
+    review_submit: "Bewertung senden",
+    review_clear: "Lokale Bewertungen löschen",
+    review_note: "Hinweis: lokal im Browser gespeichert (MVP).",
+    review_recent: "Neueste Bewertungen",
+    review_sort: "Neu zuerst",
+    review_delete: "Löschen",
+    booking_title: "Terminbuchung",
+    booking_sub:
+      "Schicken Sie uns die Eckdaten – wir melden uns mit einem Angebot.",
+    f_name: "Name*",
+    f_phone: "Telefonnummer*",
+    f_date: "Umzugsdatum*",
+    f_size: "Wohnungsgröße",
+    f_from: "Von (Adresse)",
+    f_to: "Nach (Adresse)",
+    f_message: "Nachricht",
+    ph_fullname: "Max Mustermann",
+    ph_phone: "+49 ...",
+    ph_from: "Straße, PLZ Ort, Etage",
+    ph_to: "Straße, PLZ Ort, Etage",
+    ph_message: "Besonderheiten (Aufzug, Klavier, Halteverbot, Kartons)…",
+    ph_name: "Max M.",
+    ph_comment: "Wie war Ihre Erfahrung? (mind. 10 Zeichen)",
+    opt_choose: "Bitte auswählen",
+    opt_1: "1 Zimmer",
+    opt_2: "2 Zimmer",
+    opt_3: "3 Zimmer",
+    opt_4: "4 Zimmer",
+    opt_5: "5+ Zimmer",
+    cta_email: "Per E-Mail senden",
+    contact_title: "Kontakt",
+    contact_sub: "Fragen? Rufen Sie an oder schreiben Sie per WhatsApp.",
+    contact_direct: "Direkter Kontakt",
+    contact_phone: "Telefon:",
+    contact_email: "E-Mail:",
+    contact_email_send: "E-Mail senden",
+    contact_whatsapp: "Chat starten",
+    hours: "Bürozeiten: Mo–Sa 08:00–20:00",
+    rights: "Alle Rechte vorbehalten.",
+    legal: "Impressum · Datenschutz · AGB",
+    mail_subject: "Umzugsanfrage über Website",
+    mail_subject_prefix: "Neue Umzugsanfrage",
+    mail_prices_note:
+      "Preise (Info): Lokal ab 80€/Std (2 Helfer + Transporter), Extra Helfer +25€/Std, Montage ab 30€, Entrümpelung ab 50€/m³",
+  },
+};
+
+function getLang() {
+  return localStorage.getItem("lang") || "en";
+}
+function setLang(lang) {
+  localStorage.setItem("lang", lang);
+  document.documentElement.lang = lang;
+  document.getElementById("langEn").classList.toggle("active", lang === "en");
+  document.getElementById("langDe").classList.toggle("active", lang === "de");
+  const dict = I18N[lang];
+  document.querySelectorAll("[data-i18n]").forEach((el) => {
+    const key = el.getAttribute("data-i18n");
+    if (dict[key] !== undefined) {
+      if (el.innerHTML.includes("<br")) el.innerHTML = dict[key];
+      else el.textContent = dict[key];
+    }
+  });
+  document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
+    const key = el.getAttribute("data-i18n-placeholder");
+    if (dict[key] !== undefined) el.placeholder = dict[key];
+  });
+  setWA(lang);
+  renderReviews();
+}
+document
+  .getElementById("langEn")
+  .addEventListener("click", () => setLang("en"));
+document
+  .getElementById("langDe")
+  .addEventListener("click", () => setLang("de"));
+
+/* Theme toggle */
+function getTheme() {
+  return (
+    localStorage.getItem("theme") ||
+    (window.matchMedia &&
+    window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light")
+  );
+}
+function setTheme(theme) {
+  localStorage.setItem("theme", theme);
+  document.documentElement.setAttribute(
+    "data-theme",
+    theme === "dark" ? "dark" : ""
+  );
+  document.getElementById("themeToggle").textContent =
+    theme === "dark" ? "☀️" : "🌙";
+}
+document
+  .getElementById("themeToggle")
+  .addEventListener("click", () =>
+    setTheme(getTheme() === "dark" ? "light" : "dark")
+  );
+
+/* Init */
+setTheme(getTheme());
+setLang(getLang());
+
+/* EmailJS */
+const EMAILJS_SERVICE_ID = "service_iz6367l"; // e.g. 'service_abc123'
+const EMAILJS_TEMPLATE_ID = "template_uhzwn5s"; // e.g. 'template_def456'
+const EMAILJS_PUBLIC_KEY = "HFvMFCxcbakdDWWdO"; // e.g. 'XyZ...'
+emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+
+const SEND_LABELS = {
+  en: {
+    sending: "Sending…",
+    sent: "Sent!",
+    error: "Couldn’t send. Please try again.",
+  },
+  de: {
+    sending: "Senden…",
+    sent: "Gesendet!",
+    error: "Senden fehlgeschlagen. Bitte erneut versuchen.",
+  },
+};
+const quoteForm = document.getElementById("quoteForm"),
+  sendBtn = document.getElementById("mailSend");
+quoteForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  if (!quoteForm.reportValidity()) return;
+  const lang = getLang(),
+    t = SEND_LABELS[lang] || SEND_LABELS.en,
+    prev = sendBtn.textContent;
+  sendBtn.disabled = true;
+  sendBtn.textContent = t.sending;
+  try {
+    await emailjs.sendForm(
+      EMAILJS_SERVICE_ID,
+      EMAILJS_TEMPLATE_ID,
+      "#quoteForm"
+    );
+    sendBtn.textContent = t.sent;
+    quoteForm.reset();
+    setTimeout(() => {
+      sendBtn.textContent = prev;
+      sendBtn.disabled = false;
+    }, 1200);
+  } catch (err) {
+    console.error("EmailJS error", err);
+    alert(t.error);
+    sendBtn.textContent = prev;
+    sendBtn.disabled = false;
   }
 });
