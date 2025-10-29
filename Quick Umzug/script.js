@@ -7,9 +7,52 @@ const $$ = (sel, ctx=document) => Array.from(ctx.querySelectorAll(sel)); // Sele
 // ------------------ MULTILINGUAL TEXT (i18n DICTIONARY) ------------------
 // Contains translation keys and values for English (en) and German (de)
 const dict = {
-  en:{ /* English text ... */ },
-  de:{ /* German text ... */ }
+  en:{
+    'nav.home':'Home','nav.services':'Services','nav.gallery':'Gallery','nav.reviews':'Reviews','nav.contact':'Contact',
+    'hero.badge':'Trusted by 1,000+ Berliners',
+    'hero.title':'Stress-free moving & transport — fast, careful, insured.',
+    'hero.sub':'From studio flats to full houses, we pack, protect, and deliver on time. Get a free quote today.',
+    'cta.quote':'Get a quote','cta.call':'Call now',
+    'home.cards.0.t':'Professional Crew','home.cards.0.d':'Friendly workers trained to protect your furniture and floors.',
+    'home.cards.1.t':'Flat, Fair Pricing','home.cards.1.d':'No surprises. Clear prices with everything included.',
+    'home.cards.2.t':'Fully Insured','home.cards.2.d':'Your belongings are covered from A to B.',
+    'services.title':'Our Services','services.sub':'Tailored to your move — choose what you need.',
+    'services.items.0.t':'Apartment & House Moves','services.items.0.d':'Packing, loading, transport, unloading — end-to-end.',
+    'services.items.1.t':'Furniture Assembly','services.items.1.d':' We bring tools and protect floors.',
+    'services.items.2.t':'Office Relocation','services.items.2.d':'Minimal downtime, careful handling of electronics.',
+    'services.items.3.t':'Disposal & Recycling','services.items.3.d':'Old furniture removal with proper recycling.',
+    'gallery.title':'Gallery','gallery.sub':'Recent jobs and our protective packing.',
+    'reviews.title':'Customer Reviews','reviews.sub':'Leave your review — it helps others choose with confidence.','reviews.avg':'Average rating',
+    'form.name':'Your name','form.rating':'Your rating','form.comment':'Comment','form.submit':'Submit review',
+    'contact.title':'Contact','contact.sub':'Quick quote? Send us photos on WhatsApp or call us now.',
+    'contact.whatsapp.t':'WhatsApp','contact.whatsapp.d':'Message us with your moving list and photos.','contact.whatsapp.btn':'Chat on WhatsApp',
+    'contact.phone.t':'Phone','contact.phone.d':'We speak English & German.','contact.phone.btn':'Call +49 176 5799 0309',
+    'footer.rights':'All rights reserved.'
+  },
+  de:{
+    'nav.home':'Start','nav.services':'Leistungen','nav.gallery':'Galerie','nav.reviews':'Bewertungen','nav.contact':'Kontakt',
+    'hero.badge':'Vertraut von über 1.000 Berliner:innen',
+    'hero.title':'Stressfreier Umzug & Transport – schnell, sorgfältig, versichert.',
+    'hero.sub':'Vom Studio bis zum Haus: Wir verpacken, schützen und liefern pünktlich. Holen Sie sich jetzt ein Angebot.',
+    'cta.quote':'Angebot anfragen','cta.call':'Jetzt anrufen',
+    'home.cards.0.t':'Professionelles Team','home.cards.0.d':'Freundliche UmzugsArbeiter, die Möbel und Böden schützen.',
+    'home.cards.1.t':'Faire Festpreise','home.cards.1.d':'Keine Überraschungen. Klare Preise mit allem inklusive.',
+    'home.cards.2.t':'Voll versichert','home.cards.2.d':'Ihre Sachen sind von A bis B abgesichert.',
+    'services.title':'Unsere Leistungen','services.sub':'Passend zu Ihrem Umzug – wählen Sie, was Sie brauchen.',
+    'services.items.0.t':'Wohnungs- & Hausumzüge','services.items.0.d':'Packen, Laden, Transport, Entladen – alles aus einer Hand.',
+    'services.items.1.t':'Möbelmontage','services.items.1.d':'Wir bringen Werkzeug mit und schützen die Böden.',
+    'services.items.2.t':'Büroumzug','services.items.2.d':'Minimale Ausfallzeit, sorgfältiger Umgang mit Elektronik.',
+    'services.items.3.t':'Entsorgung & Recycling','services.items.3.d':'Altmöbel fachgerecht entsorgen lassen.',
+    'gallery.title':'Galerie','gallery.sub':'Aktuelle Einsätze und unser Schutzverpacken.',
+    'reviews.title':'Kundenbewertungen','reviews.sub':'Teilen Sie Ihre Erfahrung – das hilft anderen bei der Wahl.','reviews.avg':'Durchschnittsbewertung',
+    'form.name':'Ihr Name','form.rating':'Ihre Bewertung','form.comment':'Kommentar','form.submit':'Bewertung senden',
+    'contact.title':'Kontakt','contact.sub':'Schnelles Angebot? Senden Sie uns Fotos per WhatsApp oder rufen Sie an.',
+    'contact.whatsapp.t':'WhatsApp','contact.whatsapp.d':'Schicken Sie uns Ihre Umzugsliste und Fotos.','contact.whatsapp.btn':'Auf WhatsApp chatten',
+    'contact.phone.t':'Telefon','contact.phone.d':'Wir sprechen Deutsch & Englisch.','contact.phone.btn':'Anrufen: +49 176 5799 0309',
+    'footer.rights':'Alle Rechte vorbehalten.'
+  }
 };
+
 
 // ------------------ APP STATE ------------------
 // Keeps track of selected language and theme, saved in localStorage
