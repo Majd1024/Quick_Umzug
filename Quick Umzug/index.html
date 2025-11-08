@@ -1,179 +1,331 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>QuickUmzug — Umzug & Transport</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="style.css">
-  <link rel="manifest" href="manifest.json">
-  <link rel="shortcut icon" href="image/logo.png" type="image/x-icon">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <style>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>QuickUmzug — Umzug & Transport</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="shortcut icon" href="image/logo.png" type="image/x-icon" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    /> 
 
 
+    <meta name="trustpilot-one-time-domain-verification-id" content="11e6fd55-cbd2-4ba0-82db-5ee11400a1b2"/>
 
-  </style>
-</head>
-<body>
-  <header>
-    <nav class="nav container">
-      <a href="#home" class="brand">
-        <div class="logo">
-            <img src="image/logo.png" alt="QuickUmzug Logo">
-        </div>
-        <span>QuickUmzug</span>
-      </a>
-      <div class="nav-links">
-        <a data-route="#home" class="active" href="#home" data-i18n="nav.home">Home</a>
-        <a data-route="#services" href="#services" data-i18n="nav.services">Services</a>
-        <a data-route="#gallery" href="#gallery" data-i18n="nav.gallery">Gallery</a>
-        <a data-route="#reviews" href="#reviews" data-i18n="nav.reviews">Reviews</a>
-        <a data-route="#contact" href="#contact" data-i18n="nav.contact">Contact</a>
-      </div>
-      <div class="controls">
-        <a class="icon-btn" title="WhatsApp" aria-label="WhatsAp p" href="https://wa.me/4917657990309" target="_blank" rel="noopener">
-          <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M19.11 17.21c-.27-.13-1.6-.79-1.85-.88-.25-.09-.43-.13-.62.13-.19.27-.71.88-.87 1.06-.16.18-.32.2-.59.07-.27-.13-1.12-.41-2.13-1.31-.79-.7-1.32-1.56-1.48-1.82-.16-.27-.02-.41.12-.54.12-.12.27-.32.4-.48.13-.16.18-.27.27-.45.09-.18.05-.34-.02-.48-.07-.13-.62-1.5-.85-2.05-.22-.53-.45-.46-.62-.47-.16-.01-.34-.01-.52-.01-.18 0-.48.07-.73.34-.25.27-.96.94-.96 2.29 0 1.35.98 2.66 1.12 2.84.14.18 1.93 2.95 4.67 4.13.65.28 1.16.45 1.56.58.65.21 1.24.18 1.71.11.52-.08 1.6-.65 1.83-1.28.23-.63.23-1.18.16-1.29-.07-.11-.25-.18-.52-.31z"/><path d="M14.56 3C8.25 3 3.12 8.13 3.12 14.44c0 2.55.83 4.91 2.23 6.83L3 29l7.93-2.29c1.86 1.02 4 1.6 6.27 1.6 6.31 0 11.44-5.13 11.44-11.44C28.64 8.13 23.5 3 17.2 3h-2.64zm0 2.13h2.64c5.13 0 9.31 4.18 9.31 9.31s-4.18 9.31-9.31 9.31c-2.05 0-3.94-.68-5.47-1.83l-.78-.57-4.7 1.36 1.35-4.57-.6-.82a9.27 9.27 0 01-1.9-5.98c0-5.13 4.18-9.31 9.31-9.31z"/></svg>
-        </a>
-        <a class="icon-btn" title="Call" aria-label="Call" href="tel:+4917657990309">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2c.27-.27.66-.36 1-.24a11.53 11.53 0 003.61.58c.55 0 1 .45 1 1V20c0 .55-.45 1-1 1C10.85 21 3 13.15 3 3c0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.46.58 3.61.11.34.03.73-.25 1l-2.2 2.18z"/></svg>
-        </a>
-        <button id="langBtn" class="btn" aria-label="toggle language">DE / EN</button>
-        <button id="themeBtn" class="btn" aria-label="toggle theme">🌙 / ☀️</button>
-      </div>
-    </nav>
-  </header>
 
-  <main id="app">
-    <!-- HOME -->
-    <section class="container" data-page id="home">
-      <div class="hero">
-        <div>
-          <!-- <span class="badge" data-i18n="hero.badge">Trusted by 1,000+ Berliners</span> -->
-          <h1 data-i18n="hero.title">Stress‑free moving & transport — fast, careful, insured.</h1>
-          <p class="muted" data-i18n="hero.sub">From studio flats to full houses, we pack, protect, and deliver on time. Get a free quote today.</p>
-          <div style="display:flex; gap:10px; margin-top:12px; flex-wrap:wrap">
-            <a href="#contact" class="btn" data-i18n="cta.quote">Get a quote</a>
-            <a href="tel:+4917657990309" class="btn" data-i18n="cta.call">Call now</a>
+  </head>
+  <body>
+    <header>
+      <nav class="nav container">
+        <a href="#home" class="brand">
+          <div class="logo">
+            <img src="image/logo.png" alt="QuickUmzug Logo" />
           </div>
+          <span>QuickUmzug</span>
+        </a>
+        <div class="nav-links">
+          <a data-route="#home" class="active" href="#home" data-i18n="nav.home"
+            >Home</a
+          >
+          <a data-route="#services" href="#services" data-i18n="nav.services"
+            >Services</a
+          >
+          <a data-route="#gallery" href="#gallery" data-i18n="nav.gallery"
+            >Gallery</a
+          >
+          <a data-route="#reviews" href="#reviews" data-i18n="nav.reviews"
+            >Reviews</a
+          >
+          <a data-route="#contact" href="#contact" data-i18n="nav.contact"
+            >Contact</a
+          >
         </div>
-        <div class="card">
-          <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=1200&auto=format&fit=crop" alt="Moving truck and boxes"/>
-        </div>
-      </div>
+        <div class="controls">
+          <a class="icon-btn" title="WhatsApp" aria-label="WhatsAp p" href="https://wa.me/4917657990309" target="_blank" rel="noopener">
+            <svg viewBox="0 0 32 32" aria-hidden="true">
+              <path
+                d="M19.11 17.21c-.27-.13-1.6-.79-1.85-.88-.25-.09-.43-.13-.62.13-.19.27-.71.88-.87 1.06-.16.18-.32.2-.59.07-.27-.13-1.12-.41-2.13-1.31-.79-.7-1.32-1.56-1.48-1.82-.16-.27-.02-.41.12-.54.12-.12.27-.32.4-.48.13-.16.18-.27.27-.45.09-.18.05-.34-.02-.48-.07-.13-.62-1.5-.85-2.05-.22-.53-.45-.46-.62-.47-.16-.01-.34-.01-.52-.01-.18 0-.48.07-.73.34-.25.27-.96.94-.96 2.29 0 1.35.98 2.66 1.12 2.84.14.18 1.93 2.95 4.67 4.13.65.28 1.16.45 1.56.58.65.21 1.24.18 1.71.11.52-.08 1.6-.65 1.83-1.28.23-.63.23-1.18.16-1.29-.07-.11-.25-.18-.52-.31z"
+              />
+              <path d="M14.56 3C8.25 3 3.12 8.13 3.12 14.44c0 2.55.83 4.91 2.23 6.83L3 29l7.93-2.29c1.86 1.02 4 1.6 6.27 1.6 6.31 0 11.44-5.13 11.44-11.44C28.64 8.13 23.5 3 17.2 3h-2.64zm0 2.13h2.64c5.13 0 9.31 4.18 9.31 9.31s-4.18 9.31-9.31 9.31c-2.05 0-3.94-.68-5.47-1.83l-.78-.57-4.7 1.36 1.35-4.57-.6-.82a9.27 9.27 0 01-1.9-5.98c0-5.13 4.18-9.31 9.31-9.31z"/>
+            </svg>
+          </a>
+          <a
+            class="icon-btn"
+            title="Call"
+            aria-label="Call"
+            href="tel:+4917657990309"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2c.27-.27.66-.36 1-.24a11.53 11.53 0 003.61.58c.55 0 1 .45 1 1V20c0 .55-.45 1-1 1C10.85 21 3 13.15 3 3c0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.46.58 3.61.11.34.03.73-.25 1l-2.2 2.18z"
+              />
+            </svg>
+          </a>
+          <button id="langBtn" class="btn" aria-label="toggle language">
+            DE / EN
+          </button>
+          <button id="themeBtn" class="btn" aria-label="toggle theme">
+            🌙 / ☀️
+          </button>
+<a class="trustpilot-btn"
+   href="https://www.trustpilot.com/review/quickumzug.com"
+   target="_blank"
+   rel="noopener"
+   title="Read our reviews on Trustpilot">
+  <img src="data:image/png;base64,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"
+       alt="Trustpilot"
+       class="trustpilot-star">
+  <span>Trustpilot</span>
+</a>
 
-      <div class="grid-3">
-        <div class="card">
-          <h3 data-i18n="home.cards.0.t">Professional Crew</h3>
-          <p class="muted" data-i18n="home.cards.0.d">Friendly movers trained to protect your furniture and floors.</p>
         </div>
-        <div class="card">
-          <h3 data-i18n="home.cards.1.t">Flat, Fair Pricing</h3>
-          <p class="muted" data-i18n="home.cards.1.d">No surprises. Clear quotes with everything included.</p>
-        </div>
-        <div class="card">
-          <h3 data-i18n="home.cards.2.t">Fully Insured</h3>
-          <p class="muted" data-i18n="home.cards.2.d">Your belongings are covered from A to B.</p>
-        </div>
-      </div>
-    </section>
+      </nav>
+    </header>
 
-    <!-- SERVICES -->
-    <section class="container" data-page id="services">
-      <h2 data-i18n="services.title">Our Services</h2>
-      <p class="muted" data-i18n="services.sub">Tailored to your move — choose what you need.</p>
-      <div class="grid-2">
-        <div class="card">
-          <h3 data-i18n="services.items.0.t">Apartment & House Moves</h3>
-          <p class="muted" data-i18n="services.items.0.d">Packing, loading, transport, unloading — end‑to‑end.</p>
-        </div>
-        <div class="card">
-          <h3 data-i18n="services.items.1.t">Furniture Assembly</h3>
-          <p class="muted" data-i18n="services.items.1.d">IKEA pros. We bring tools and protect floors.</p>
-        </div>
-        <div class="card">
-          <h3 data-i18n="services.items.2.t">Office Relocation</h3>
-          <p class="muted" data-i18n="services.items.2.d">Minimal downtime, careful handling of electronics.</p>
-        </div>
-        <div class="card">
-          <h3 data-i18n="services.items.3.t">Disposal & Recycling</h3>
-          <p class="muted" data-i18n="services.items.3.d">Old furniture removal with proper recycling.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- GALLERY -->
-    <section class="container" data-page id="gallery">
-      <h2 data-i18n="gallery.title">Gallery</h2>
-      <p class="muted" data-i18n="gallery.sub">Recent jobs and our protective packing.</p>
-      <div class="gallery">
-        <img src="https://images.unsplash.com/photo-1598300183876-1b984f5169a4?q=80&w=1200&auto=format&fit=crop" alt="Wrapped sofa on a trolley"/>
-        <img src="https://images.unsplash.com/photo-1592878904946-b3cd9c03332a?q=80&w=1200&auto=format&fit=crop" alt="Labeled boxes ready for moving"/>
-        <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1200&auto=format&fit=crop" alt="Moving truck open with boxes"/>
-        <img src="https://images.unsplash.com/photo-1568283241477-042b4e0f61b3?q=80&w=1200&auto=format&fit=crop" alt="Team carrying furniture"/>
-        <img src="https://images.unsplash.com/photo-1582582621959-48f1bbcd9d62?q=80&w=1200&auto=format&fit=crop" alt="Protective blankets on furniture"/>
-        <img src="https://images.unsplash.com/photo-1582582621860-7e28f6f1fa7f?q=80&w=1200&auto=format&fit=crop" alt="Dolly and straps equipment"/>
-      </div>
-    </section>
-
-    <!-- REVIEWS -->
-    <section class="container" data-page id="reviews">
-      <h2 data-i18n="reviews.title">Customer Reviews</h2>
-      <p class="muted" data-i18n="reviews.sub">Leave your review — it helps others choose with confidence.</p>
-
-      <div class="card" style="margin-bottom:16px">
-        <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap">
-          <strong data-i18n="reviews.avg">Average rating</strong>
-          <div id="avgStars" class="stars" aria-hidden="true"></div>
-          <span id="avgText" class="muted">0.0 (0)</span>
-        </div>
-      </div>
-
-      <div class="grid-2">
-        <form id="reviewForm" class="card" autocomplete="on">
-          <label for="name"><span data-i18n="form.name">Your name</span></label>
-          <input id="name" name="name" type="text" required placeholder="Alex" style="width:100%; margin:6px 0 12px; padding:12px; border-radius:12px; border:1px solid color-mix(in srgb, var(--muted) 35%, transparent); background:transparent; color:var(--text)">
+    <main id="app">
+      <!-- HOME -->
+      <section class="container" data-page id="home">
+        <div class="hero">
           <div>
-            <div style="margin-bottom:6px" data-i18n="form.rating">Your rating</div>
-            <div id="ratingStars" class="stars" role="radiogroup" aria-label="Rating"></div>
+            <!-- <span class="badge" data-i18n="hero.badge">Trusted by 1,000+ Berliners</span> -->
+            <h1 data-i18n="hero.title">
+              Stress‑free moving & transport — fast, careful, insured.
+            </h1>
+            <p class="muted" data-i18n="hero.sub">
+              From studio flats to full houses, we pack, protect, and deliver on
+              time. Get a free quote today.
+            </p>
+            <div
+              style="
+                display: flex;
+                gap: 10px;
+                margin-top: 12px;
+                flex-wrap: wrap;
+              "
+            >
+              <a href="#contact" class="btn" data-i18n="cta.quote"
+                >Get a quote</a
+              >
+              <a href="tel:+4917657990309" class="btn" data-i18n="cta.call"
+                >Call now</a
+              >
+            </div>
           </div>
-          <label for="comment" style="margin-top:12px"><span data-i18n="form.comment">Comment</span></label>
-          <textarea id="comment" name="comment" rows="4" required placeholder="Great team, careful and fast!" style="width:100%; margin:6px 0 12px; padding:12px; border-radius:12px; border:1px solid color-mix(in srgb, var(--muted) 35%, transparent); background:transparent; color:var(--text)"></textarea>
-          <button class="btn" type="submit" data-i18n="form.submit">Submit review</button>
-        </form>
-        <div id="reviewsList" class="grid-3"></div>
-      </div>
-    </section>
-
-    <!-- CONTACT -->
-    <section class="container" data-page id="contact">
-      <h2 data-i18n="contact.title">Contact</h2>
-      <p class="muted" data-i18n="contact.sub">Quick quote? Send us photos on WhatsApp or call us now.</p>
-      <div class="grid-2">
-        <div class="card">
-          <h3 data-i18n="contact.whatsapp.t">WhatsApp</h3>
-          <p class="muted" data-i18n="contact.whatsapp.d">Message us with your moving list and photos.</p>
-          <a class="btn" href="https://wa.me/4917657990309?text=Hello%20QuickUmzug%2C%20I%27d%20like%20a%20moving%20quote." target="_blank" rel="noopener" data-i18n="contact.whatsapp.btn">Chat on WhatsApp</a>
+          <div class="card">
+            <img
+              src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=1200&auto=format&fit=crop"
+              alt="Moving truck and boxes"
+            />
+          </div>
         </div>
-        <div class="card">
-          <h3 data-i18n="contact.phone.t">Phone</h3>
-          <p class="muted" data-i18n="contact.phone.d">We speak English & German.</p>
-          <a class="btn" href="tel:+4917657990309" data-i18n="contact.phone.btn">Call +49 176 5799 0309</a>
+
+        <div class="grid-3">
+          <div class="card">
+            <h3 data-i18n="home.cards.0.t">Professional Crew</h3>
+            <p class="muted" data-i18n="home.cards.0.d">
+              Friendly movers trained to protect your furniture and floors.
+            </p>
+          </div>
+          <div class="card">
+            <h3 data-i18n="home.cards.1.t">Flat, Fair Pricing</h3>
+            <p class="muted" data-i18n="home.cards.1.d">
+              No surprises. Clear quotes with everything included.
+            </p>
+          </div>
+          <div class="card">
+            <h3 data-i18n="home.cards.2.t">Fully Insured</h3>
+            <p class="muted" data-i18n="home.cards.2.d">
+              Your belongings are covered from A to B.
+            </p>
+          </div>
         </div>
-      </div>
-    </section>
-  </main>
+      </section>
 
+      <!-- SERVICES -->
+      <section class="container" data-page id="services">
+        <h2 data-i18n="services.title">Our Services</h2>
+        <p class="muted" data-i18n="services.sub">
+          Tailored to your move — choose what you need.
+        </p>
+        <div class="grid-2">
+          <div class="card">
+            <h3 data-i18n="services.items.0.t">Apartment & House Moves</h3>
+            <p class="muted" data-i18n="services.items.0.d">
+              Packing, loading, transport, unloading — end‑to‑end.
+            </p>
+          </div>
+          <div class="card">
+            <h3 data-i18n="services.items.1.t">Furniture Assembly</h3>
+            <p class="muted" data-i18n="services.items.1.d">
+              IKEA pros. We bring tools and protect floors.
+            </p>
+          </div>
+          <div class="card">
+            <h3 data-i18n="services.items.2.t">Office Relocation</h3>
+            <p class="muted" data-i18n="services.items.2.d">
+              Minimal downtime, careful handling of electronics.
+            </p>
+          </div>
+          <div class="card">
+            <h3 data-i18n="services.items.3.t">Disposal & Recycling</h3>
+            <p class="muted" data-i18n="services.items.3.d">
+              Old furniture removal with proper recycling.
+            </p>
+          </div>
+        </div>
+      </section>
 
-<footer class="container">
-  © <span id="year"></span> QuickUmzug — 
-  <span class="muted" data-i18n="footer.rights">All rights reserved.</span>
-</footer>
+      <!-- GALLERY -->
+      <section class="container" data-page id="gallery">
+        <h2 data-i18n="gallery.title">Gallery</h2>
+        <p class="muted" data-i18n="gallery.sub">
+          Recent jobs and our protective packing.
+        </p>
+        <div class="gallery">
+          <img src="" alt="Wrapped sofa on a trolley" />
+          <img src="" alt="Labeled boxes ready for moving" />
+          <img src="" alt="Moving truck open with boxes" />
+          <img src="" alt="Team carrying furniture" />
+          <img src="" alt="Protective blankets on furniture" />
+          <img src="" alt="Dolly and straps equipment" />
+        </div>
+      </section>
 
+      <!-- REVIEWS -->
+      <section class="container" data-page id="reviews">
+        <h2 data-i18n="reviews.title">Customer Reviews</h2>
+        <p class="muted" data-i18n="reviews.sub">
+          Leave your review — it helps others choose with confidence.
+        </p>
 
-  
-  <script src="script.js" type="module"></script>
+        <div class="card" style="margin-bottom: 16px">
+          <div
+            style="
+              display: flex;
+              align-items: center;
+              gap: 10px;
+              flex-wrap: wrap;
+            "
+          >
+            <strong data-i18n="reviews.avg">Average rating</strong>
+            <div id="avgStars" class="stars" aria-hidden="true"></div>
+            <span id="avgText" class="muted">0.0 (0)</span>
+          </div>
+        </div>
 
-</body>
+        <div class="grid-2">
+          <form id="reviewForm" class="card" autocomplete="on">
+            <label for="name"
+              ><span data-i18n="form.name">Your name</span></label
+            >
+            <input
+              id="name"
+              name="name"
+              type="text"
+              required
+              placeholder="Alex"
+              style="
+                width: 100%;
+                margin: 6px 0 12px;
+                padding: 12px;
+                border-radius: 12px;
+                border: 1px solid
+                  color-mix(in srgb, var(--muted) 35%, transparent);
+                background: transparent;
+                color: var(--text);
+              "
+            />
+            <div>
+              <div style="margin-bottom: 6px" data-i18n="form.rating">
+                Your rating
+              </div>
+              <div
+                id="ratingStars"
+                class="stars"
+                role="radiogroup"
+                aria-label="Rating"
+              ></div>
+            </div>
+            <label for="comment" style="margin-top: 12px"
+              ><span data-i18n="form.comment">Comment</span></label
+            >
+            <textarea
+              id="comment"
+              name="comment"
+              rows="4"
+              required
+              placeholder="Great team, careful and fast!"
+              style="
+                width: 100%;
+                margin: 6px 0 12px;
+                padding: 12px;
+                border-radius: 12px;
+                border: 1px solid
+                  color-mix(in srgb, var(--muted) 35%, transparent);
+                background: transparent;
+                color: var(--text);
+              "
+            ></textarea>
+            <button class="btn" type="submit" data-i18n="form.submit">
+              Submit review
+            </button>
+          </form>
+          <div id="reviewsList" class="grid-3"></div>
+        </div>
+      </section>
+
+      <!-- CONTACT -->
+      <section class="container" data-page id="contact">
+        <h2 data-i18n="contact.title">Contact</h2>
+        <p class="muted" data-i18n="contact.sub">
+          Quick quote? Send us photos on WhatsApp or call us now.
+        </p>
+        <div class="grid-2">
+          <div class="card">
+            <h3 data-i18n="contact.whatsapp.t">WhatsApp</h3>
+            <p class="muted" data-i18n="contact.whatsapp.d">
+              Message us with your moving list and photos.
+            </p>
+            <a
+              class="btn"
+              href="https://wa.me/4917657990309?"
+              target="_blank"
+              rel="noopener"
+              data-i18n="contact.whatsapp.btn"
+              >Chat on WhatsApp</a
+            >
+          </div>
+          <div class="card">
+            <h3 data-i18n="contact.phone.t">Phone</h3>
+            <p class="muted" data-i18n="contact.phone.d">
+              We speak English & German.
+            </p>
+            <a
+              class="btn"
+              href="tel:+4917657990309"
+              data-i18n="contact.phone.btn"
+              >Call +49 176 5799 0309</a
+            >
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="container">
+      © <span id="year"></span> QuickUmzug —
+      <span class="muted" data-i18n="footer.rights">All rights reserved.</span>
+    </footer>
+
+    <script src="script.js" type="module"></script>
+    <script
+      type="text/javascript"
+      src="//widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js"
+      async
+    ></script>
+  </body>
 </html>
