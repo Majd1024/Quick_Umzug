@@ -174,11 +174,11 @@ footer{padding:24px; color:var(--muted); border-top:1px solid color-mix(in srgb,
 }
 
 .icon-btn[title="Call"] {
-  color: #25D366; /* WhatsApp green */
+  color: #1881BA; /* WhatsApp green */
 }
 
 .icon-btn[title="Call"]:hover {
-  background: color-mix(in srgb, #25D366 25%, transparent);
+  background: color-mix(in srgb, #1881BA 25%, transparent);
 }
 
 
@@ -230,5 +230,6 @@ html:not(.light) .trustpilot-btn:hover {
   color: #fff;
   border-color: #00b67a;
 }
+
 
 
