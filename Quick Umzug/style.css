@@ -164,3 +164,62 @@ footer{padding:24px; color:var(--muted); border-top:1px solid color-mix(in srgb,
   border-radius: 10px; /* keep the same rounded corners */
 }
 
+
+.icon-btn[title="WhatsApp"] {
+  color: #25D366; /* WhatsApp green */
+}
+
+.icon-btn[title="WhatsApp"]:hover {
+  background: color-mix(in srgb, #25D366 25%, transparent);
+}
+
+
+
+
+
+/* ---------- Trustpilot Button ---------- */
+.trustpilot-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--card);
+  border: 1px solid color-mix(in srgb, var(--muted) 35%, transparent);
+  border-radius: 12px;
+  padding: 6px 10px;
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--text);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow);
+}
+
+.trustpilot-btn:hover {
+  background: color-mix(in srgb, var(--brand-2) 15%, transparent);
+  border-color: #00b67a;
+  transform: scale(1.05);
+}
+
+.trustpilot-star {
+  width: 18px;
+  height: 18px;
+}
+
+/* ---------- Auto Theme Adaptation ---------- */
+html.light .trustpilot-btn {
+  background: var(--card);
+  color: var(--text);
+  border-color: color-mix(in srgb, var(--muted) 35%, transparent);
+}
+
+html:not(.light) .trustpilot-btn {
+  background: var(--card);
+  color: var(--text);
+  border-color: color-mix(in srgb, var(--muted) 35%, transparent);
+}
+
+html:not(.light) .trustpilot-btn:hover {
+  background: #00b67a;
+  color: #fff;
+  border-color: #00b67a;
+}
