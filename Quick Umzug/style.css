@@ -469,3 +469,37 @@ html:not(.light) .trustpilot-btn:hover {
   color: #fff;
   border-color: #00b67a;
 }
+
+/* Floating WhatsApp SVG — left middle */
+.floating-whatsapp {
+  position: fixed;
+  left: 0px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.floating-whatsapp svg {
+  width: 50px;
+  height: 40px;
+  fill: #25D366; /* WhatsApp green */
+  cursor: pointer;
+  transition: transform .2s ease;
+}
+
+.floating-whatsapp svg:hover {
+  transform: scale(1.12);
+}
+
+.floating-whatsapp span {
+  font-size: 12px;
+  color: var(--text);
+  background: color-mix(in srgb, var(--bg) 60%, transparent);
+  padding: 4px 8px;
+  border-radius: 6px;
+  backdrop-filter: blur(4px);
+}
