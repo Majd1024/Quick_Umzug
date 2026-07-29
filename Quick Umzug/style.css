@@ -503,3 +503,32 @@ html:not(.light) .trustpilot-btn:hover {
   border-radius: 6px;
   backdrop-filter: blur(4px);
 }
+
+/* Datenschutz-Zustimmung im Bewertungsformular */
+.privacy-consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 8px 0 16px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.privacy-consent input {
+  width: 17px;
+  height: 17px;
+  margin-top: 3px;
+  flex: 0 0 auto;
+  cursor: pointer;
+}
+
+.privacy-consent a {
+  color: var(--brand);
+  text-decoration: underline;
+}
+
+.privacy-consent a:hover {
+  text-decoration-thickness: 2px;
+}

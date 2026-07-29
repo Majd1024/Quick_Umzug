@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -271,6 +271,21 @@
                 color: var(--text);
               "
             ></textarea>
+            <label class="privacy-consent" for="privacyConsent">
+              <input
+                type="checkbox"
+                id="privacyConsent"
+                name="privacyConsent"
+                required
+              />
+              <span>
+                Ich habe die
+                <a href="datenschutz.html" target="_blank" rel="noopener">Datenschutzerklärung</a>
+                gelesen und stimme der Verarbeitung meiner Angaben zur Veröffentlichung
+                der Bewertung zu.
+              </span>
+            </label>
+
             <button class="btn" type="submit" data-i18n="form.submit">
               Submit review
             </button>
@@ -327,10 +342,20 @@
 </div>
 
 
-    <footer class="container">
-      © <span id="year"></span> QuickUmzug —
-      <span class="muted" data-i18n="footer.rights">All rights reserved.</span>
-    </footer>
+<footer class="container">
+  <p>
+    © <span id="year"></span> QuickUmzug —
+    <span class="muted" data-i18n="footer.rights">
+      Alle Rechte vorbehalten.
+    </span>
+  </p>
+
+  <nav class="footer-links" aria-label="Rechtliche Informationen">
+    <a href="impressum.html">Impressum</a>
+    <span aria-hidden="true">|</span>
+    <a href="datenschutz.html">Datenschutz</a>
+  </nav>
+</footer>
 
     <script src="script.js" type="module"></script>
     <script
@@ -340,6 +365,3 @@
     ></script>
   </body>
 </html>
-
-
-
