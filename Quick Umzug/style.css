@@ -1,23 +1,29 @@
 :root {
-  --bg: #0b1020;
-  --card: #121a33;
-  --text: #e8ecf8;
-  --muted: #a9b3d0;
-  --brand: #5b8cff;
-  --brand-2: #3dd9b2;
-  --ring: rgba(91,140,255,.5);
-  --shadow: 0 10px 30px rgba(0,0,0,.35);
+  --bg: #211317;
+  --card: #321b22;
+  --card-soft: #3d222a;
+  --text: #fffaf1;
+  --muted: #d7c9c2;
+  --brand: #9d3f54;
+  --brand-dark: #743043;
+  --brand-2: #d7a4ad;
+  --cream: #f1eadf;
+  --ring: rgba(157, 63, 84, 0.48);
+  --shadow: 0 12px 30px rgba(29, 10, 16, 0.35);
 }
 
 :root.light {
-  --bg: #f7f8fc;
-  --card: #ffffff;
-  --text: #0e1325;
-  --muted: #5b647a;
-  --brand: #3b66ff;
-  --brand-2: #0bbf94;
-  --ring: rgba(59,102,255,.25);
-  --shadow: 0 10px 30px rgba(10,31,68,.10);
+  --bg: #f3ede4;
+  --card: #fffaf2;
+  --card-soft: #f5e7e2;
+  --text: #32171f;
+  --muted: #725d63;
+  --brand: #9d3f54;
+  --brand-dark: #743043;
+  --brand-2: #c98291;
+  --cream: #fffaf2;
+  --ring: rgba(157, 63, 84, 0.25);
+  --shadow: 0 12px 30px rgba(88, 42, 54, 0.14);
 }
 
 * {
@@ -37,15 +43,11 @@ html {
 body {
   margin: 0;
   font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-
-  /* --- Background image added --- */
   background-image: url("image/movers.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center top;
   background-attachment: fixed;
-  /* -------------------------------- */
-
   background-color: var(--bg);
   color: var(--text);
   line-height: 1.5;
@@ -53,14 +55,26 @@ body {
   overflow-x: hidden;
 }
 
-/* DARK OVERLAY */
+/* WARM DARK OVERLAY */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.45);
+  background: linear-gradient(
+    180deg,
+    rgba(38, 16, 23, 0.54),
+    rgba(25, 10, 15, 0.64)
+  );
   pointer-events: none;
   z-index: -1;
+}
+
+:root.light body::before {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 249, 240, 0.38),
+    rgba(93, 47, 60, 0.22)
+  );
 }
 
 a {
@@ -85,9 +99,9 @@ header {
   position: sticky;
   top: 0;
   z-index: 50;
-  backdrop-filter: saturate(180%) blur(10px);
-  background: color-mix(in hsl, var(--bg) 85%, transparent);
-  border-bottom: 1px solid color-mix(in srgb, var(--muted) 20%, transparent);
+  backdrop-filter: saturate(160%) blur(12px);
+  background: color-mix(in srgb, var(--bg) 90%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--brand-2) 22%, transparent);
 }
 
 header.scrolled {
@@ -98,27 +112,30 @@ header.scrolled {
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
-  gap: 12px;
-  padding: 10px 16px;
+  gap: 14px;
+  padding: 9px 16px;
 }
 
 .brand {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 11px;
   font-weight: 800;
-  letter-spacing: .2px;
+  letter-spacing: 0.2px;
 }
 
 .brand .logo {
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
-  background: linear-gradient(135deg, var(--brand), var(--brand-2));
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  background: var(--cream);
   display: grid;
   place-items: center;
-  color: #fff;
+  color: var(--brand);
   font-weight: 900;
+  border: 1px solid rgba(255, 250, 241, 0.6);
+  box-shadow: 0 6px 16px rgba(25, 8, 13, 0.25);
+  overflow: hidden;
 }
 
 .nav-links {
@@ -128,17 +145,26 @@ header.scrolled {
 }
 
 .nav-links a {
-  padding: 8px 10px;
-  border-radius: 8px;
+  padding: 8px 11px;
+  border-radius: 9px;
   color: var(--muted);
   white-space: nowrap;
-  border: 1px solid color-mix(in srgb, var(--muted) 25%, transparent);
+  border: 1px solid color-mix(in srgb, var(--brand-2) 22%, transparent);
+  transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease,
+    transform 0.2s ease;
 }
 
 .nav-links a.active,
 .nav-links a:hover {
-  color: var(--text);
-  background: color-mix(in srgb, var(--brand) 16%, transparent);
+  color: #fffaf1;
+  background: linear-gradient(135deg, var(--brand), var(--brand-dark));
+  border-color: color-mix(in srgb, var(--brand-2) 55%, transparent);
+  transform: translateY(-1px);
+}
+
+:root.light .nav-links a.active,
+:root.light .nav-links a:hover {
+  color: #fff;
 }
 
 .controls {
@@ -148,33 +174,39 @@ header.scrolled {
 }
 
 .btn {
-  border: 1px solid color-mix(in srgb, var(--muted) 35%, transparent);
-  background: var(--card);
-  color: var(--text);
+  border: 1px solid color-mix(in srgb, var(--brand-2) 30%, transparent);
+  background: linear-gradient(135deg, var(--brand), var(--brand-dark));
+  color: #fffaf1;
   border-radius: 12px;
-  padding: 8px 12px;
+  padding: 9px 13px;
   display: inline-flex;
   align-items: center;
   gap: 8px;
   cursor: pointer;
   box-shadow: var(--shadow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, outline 0.2s ease;
 }
 
 .btn:hover {
   outline: 2px solid var(--ring);
+  transform: translateY(-2px);
 }
 
 .icon-btn {
   width: 40px;
   height: 40px;
-  border: 1px solid color-mix(in srgb, var(--muted) 35%, transparent);
-  background: var(--card);
+  border: 1px solid color-mix(in srgb, var(--brand-2) 30%, transparent);
+  background: color-mix(in srgb, var(--card) 94%, transparent);
   color: var(--text);
-  border-radius: 10px;
+  border-radius: 11px;
   display: grid;
   place-items: center;
   box-shadow: var(--shadow);
-  transition: color .3s ease, background .3s ease;
+  transition: color 0.3s ease, background 0.3s ease, transform 0.2s ease;
+}
+
+.icon-btn:hover {
+  transform: translateY(-2px);
 }
 
 .icon-btn svg {
@@ -187,22 +219,42 @@ header.scrolled {
 /* HERO / SECTIONS / CARDS */
 .hero {
   display: grid;
-  grid-template-columns: 1.2fr .8fr;
-  gap: 20px;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 24px;
   align-items: center;
-  padding: 24px 16px;
+  padding: 32px 16px 24px;
   background: transparent !important;
 }
 
 .hero h1 {
-  font-size: clamp(28px, 3.2vw, 44px);
-  line-height: 1.1;
-  margin: 0 0 12px;
+  font-size: clamp(30px, 3.3vw, 46px);
+  line-height: 1.08;
+  margin: 0 0 14px;
+  color: #fffaf1;
+  text-shadow: 0 3px 16px rgba(25, 8, 13, 0.34);
+}
+
+:root.light .hero h1 {
+  color: #32171f;
+  text-shadow: none;
 }
 
 .hero p {
-  margin: 0 0 18px;
+  margin: 0 0 20px;
   color: var(--muted);
+}
+
+.hero > div:last-child {
+  padding: 16px;
+  border-radius: 22px;
+  background: linear-gradient(145deg, var(--brand-dark), var(--card));
+  border: 1px solid color-mix(in srgb, var(--brand-2) 35%, transparent);
+  box-shadow: 0 18px 45px rgba(25, 8, 13, 0.42);
+}
+
+.hero > div:last-child img {
+  border-radius: 16px;
+  border: 2px solid color-mix(in srgb, var(--cream) 75%, transparent);
 }
 
 .badge {
@@ -211,20 +263,33 @@ header.scrolled {
   gap: 8px;
   background: linear-gradient(
     135deg,
-    color-mix(in srgb, var(--brand) 25%, transparent),
-    color-mix(in srgb, var(--brand-2) 25%, transparent)
+    color-mix(in srgb, var(--brand) 78%, transparent),
+    color-mix(in srgb, var(--brand-dark) 88%, transparent)
   );
+  color: #fffaf1;
   padding: 8px 12px;
   border-radius: 999px;
-  font-weight: 600;
+  font-weight: 700;
+  border: 1px solid color-mix(in srgb, var(--brand-2) 40%, transparent);
 }
 
 .card {
-  background: var(--card);
-  border: 1px solid color-mix(in srgb, var(--muted) 25%, transparent);
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, var(--card) 96%, transparent),
+    color-mix(in srgb, var(--card-soft) 94%, transparent)
+  );
+  border: 1px solid color-mix(in srgb, var(--brand-2) 24%, transparent);
   border-radius: 18px;
   padding: 18px;
   box-shadow: var(--shadow);
+  backdrop-filter: blur(7px);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--brand-2) 50%, transparent);
 }
 
 .grid-3 {
@@ -245,6 +310,11 @@ section {
 
 h2 {
   margin: 0 0 8px;
+  color: #fffaf1;
+}
+
+:root.light h2 {
+  color: #32171f;
 }
 
 .muted {
@@ -257,6 +327,11 @@ h2 {
   gap: 12px;
 }
 
+.gallery img {
+  border: 2px solid color-mix(in srgb, var(--brand-2) 25%, transparent);
+  box-shadow: var(--shadow);
+}
+
 /* REVIEWS */
 .stars {
   display: inline-flex;
@@ -267,7 +342,13 @@ h2 {
 .stars svg {
   width: 22px;
   height: 22px;
-  fill: color-mix(in srgb, var(--muted) 40%, transparent);
+  fill: var(--muted);
+  transition: fill 0.2s ease, transform 0.2s ease;
+}
+
+.stars svg:hover {
+  fill: var(--brand-2);
+  transform: scale(1.08);
 }
 
 .stars svg.active {
@@ -277,19 +358,21 @@ h2 {
 .review {
   padding: 14px;
   border-radius: 14px;
-  border: 1px solid color-mix(in srgb, var(--muted) 25%, transparent);
-  background: var(--card);
+  border: 1px solid color-mix(in srgb, var(--brand-2) 25%, transparent);
+  background: linear-gradient(145deg, var(--card), var(--card-soft));
+  box-shadow: var(--shadow);
 }
 
 footer {
   padding: 24px;
   color: var(--muted);
-  border-top: 1px solid color-mix(in srgb, var(--muted) 25%, transparent);
+  border-top: 1px solid color-mix(in srgb, var(--brand-2) 25%, transparent);
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
 }
 
 /* ANCHOR OFFSET */
 [data-page] {
-  scroll-margin-top: 76px;
+  scroll-margin-top: 86px;
 }
 
 /* ---------- RESPONSIVE ---------- */
@@ -308,8 +391,8 @@ footer {
   }
 
   .brand .logo {
-    width: 28px;
-    height: 28px;
+    width: 38px;
+    height: 38px;
   }
 
   .nav-links {
@@ -329,18 +412,23 @@ footer {
 
 /* ---------- MOBILE ---------- */
 @media (max-width: 600px) {
+  body {
+    background-attachment: scroll;
+  }
+
   .nav {
     grid-template-columns: 1fr;
     grid-template-areas:
       "brand"
       "links"
       "controls";
-    row-gap: 6px;
+    row-gap: 7px;
     padding: 8px 10px;
   }
 
   .brand {
     grid-area: brand;
+    justify-content: center;
   }
 
   .nav-links {
@@ -356,7 +444,7 @@ footer {
     flex: 0 1 auto;
     font-size: 12px;
     padding: 6px 10px;
-    border-radius: 6px;
+    border-radius: 7px;
     white-space: nowrap;
   }
 
@@ -379,25 +467,17 @@ footer {
     padding: 4px 6px;
     font-size: 12px;
   }
+
+  .hero {
+    padding-top: 22px;
+  }
+
+  .hero > div:last-child {
+    padding: 10px;
+  }
 }
 
-/* STAR VISIBILITY FIX */
-.stars svg {
-  width: 22px;
-  height: 22px;
-  fill: var(--muted);
-  transition: fill 0.2s ease;
-}
-
-.stars svg:hover {
-  fill: var(--brand);
-}
-
-.stars svg.active {
-  fill: gold;
-}
-
-/* LOGO IMAGE FIX */
+/* LOGO IMAGE */
 .brand .logo img {
   width: 100%;
   height: 100%;
@@ -407,20 +487,20 @@ footer {
 
 /* WHATSAPP BUTTON */
 .icon-btn[title="WhatsApp"] {
-  color: #25D366;
+  color: #25d366;
 }
 
 .icon-btn[title="WhatsApp"]:hover {
-  background: color-mix(in srgb, #25D366 25%, transparent);
+  background: color-mix(in srgb, #25d366 20%, var(--card));
 }
 
 /* CALL BUTTON */
 .icon-btn[title="Call"] {
-  color: #1881BA;
+  color: #f1d7dc;
 }
 
 .icon-btn[title="Call"]:hover {
-  background: color-mix(in srgb, #1881BA 25%, transparent);
+  background: color-mix(in srgb, var(--brand) 35%, var(--card));
 }
 
 /* ---------- TRUSTPILOT BUTTON ---------- */
@@ -428,11 +508,11 @@ footer {
   display: flex;
   align-items: center;
   gap: 6px;
-  background: var(--card);
-  border: 1px solid color-mix(in srgb, var(--muted) 35%, transparent);
+  background: color-mix(in srgb, var(--card) 94%, transparent);
+  border: 1px solid color-mix(in srgb, var(--brand-2) 30%, transparent);
   border-radius: 12px;
   padding: 6px 10px;
-  font-weight: 500;
+  font-weight: 600;
   font-size: 14px;
   color: var(--text);
   text-decoration: none;
@@ -441,9 +521,10 @@ footer {
 }
 
 .trustpilot-btn:hover {
-  background: color-mix(in srgb, var(--brand-2) 15%, transparent);
+  background: #00b67a;
   border-color: #00b67a;
-  transform: scale(1.05);
+  color: #fff;
+  transform: translateY(-2px);
 }
 
 .trustpilot-star {
@@ -455,13 +536,13 @@ footer {
 html.light .trustpilot-btn {
   background: var(--card);
   color: var(--text);
-  border-color: color-mix(in srgb, var(--muted) 35%, transparent);
+  border-color: color-mix(in srgb, var(--brand) 25%, transparent);
 }
 
 html:not(.light) .trustpilot-btn {
-  background: var(--card);
+  background: color-mix(in srgb, var(--card) 94%, transparent);
   color: var(--text);
-  border-color: color-mix(in srgb, var(--muted) 35%, transparent);
+  border-color: color-mix(in srgb, var(--brand-2) 30%, transparent);
 }
 
 html:not(.light) .trustpilot-btn:hover {
@@ -473,7 +554,7 @@ html:not(.light) .trustpilot-btn:hover {
 /* Floating WhatsApp SVG — left middle */
 .floating-whatsapp {
   position: fixed;
-  left: 0px;
+  left: 0;
   top: 50%;
   transform: translateY(-50%);
   z-index: 9999;
@@ -486,9 +567,10 @@ html:not(.light) .trustpilot-btn:hover {
 .floating-whatsapp svg {
   width: 50px;
   height: 40px;
-  fill: #25D366; /* WhatsApp green */
+  fill: #25d366;
   cursor: pointer;
-  transition: transform .2s ease;
+  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.3));
+  transition: transform 0.2s ease;
 }
 
 .floating-whatsapp svg:hover {
@@ -497,11 +579,12 @@ html:not(.light) .trustpilot-btn:hover {
 
 .floating-whatsapp span {
   font-size: 12px;
-  color: var(--text);
-  background: color-mix(in srgb, var(--bg) 60%, transparent);
+  color: #fffaf1;
+  background: linear-gradient(135deg, var(--brand), var(--brand-dark));
   padding: 4px 8px;
   border-radius: 6px;
   backdrop-filter: blur(4px);
+  box-shadow: var(--shadow);
 }
 
 /* Datenschutz-Zustimmung im Bewertungsformular */
@@ -522,10 +605,11 @@ html:not(.light) .trustpilot-btn:hover {
   margin-top: 3px;
   flex: 0 0 auto;
   cursor: pointer;
+  accent-color: var(--brand);
 }
 
 .privacy-consent a {
-  color: var(--brand);
+  color: var(--brand-2);
   text-decoration: underline;
 }
 
