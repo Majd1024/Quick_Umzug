@@ -43,16 +43,24 @@ html {
 body {
   margin: 0;
   font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  background-image: url("image/movers.jpg");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center top;
-  background-attachment: fixed;
   background-color: var(--bg);
   color: var(--text);
   line-height: 1.5;
   touch-action: pan-y;
   overflow-x: hidden;
+}
+
+/* FIXED BACKGROUND IMAGE LAYER */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url("image/movers.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center top;
+  pointer-events: none;
+  z-index: -2;
 }
 
 /* WARM DARK OVERLAY */
@@ -412,8 +420,9 @@ footer {
 
 /* ---------- MOBILE ---------- */
 @media (max-width: 600px) {
-  body {
-    background-attachment: scroll;
+  body::after {
+    background-size: cover;
+    background-position: 52% top;
   }
 
   .nav {
